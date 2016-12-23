@@ -834,9 +834,9 @@ void QMapboxGL::resize(const QSize& size, const QSize& framebufferSize)
 */
 void QMapboxGL::addAnnotationIcon(const QString &name, const QImage &icon)
 {
-    if (sprite.isNull()) return;
+    if (icon.isNull()) return;
 
-    d_ptr->mapObj->addAnnotationIcon(name.toStdString(), toSpriteImage(sprite));
+    d_ptr->mapObj->addAnnotationIcon(name.toStdString(), toSpriteImage(icon));
 }
 
 QPointF QMapboxGL::pixelForCoordinate(const Coordinate &coordinate_) const
