@@ -55,6 +55,24 @@ static_assert(mbgl::underlying_type(QMapboxGLSettings::ConstrainWidthAndHeight) 
 static_assert(mbgl::underlying_type(QMapboxGLSettings::DefaultViewport) == mbgl::underlying_type(mbgl::ViewportMode::Default), "error");
 static_assert(mbgl::underlying_type(QMapboxGLSettings::FlippedYViewport) == mbgl::underlying_type(mbgl::ViewportMode::FlippedY), "error");
 
+// mbgl::MapChange
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeRegionWillChange) == mbgl::underlying_type(mbgl::MapChangeRegionWillChange), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeRegionWillChangeAnimated) == mbgl::underlying_type(mbgl::MapChangeRegionWillChangeAnimated), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeRegionIsChanging) == mbgl::underlying_type(mbgl::MapChangeRegionIsChanging), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeRegionDidChange) == mbgl::underlying_type(mbgl::MapChangeRegionDidChange), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeRegionDidChangeAnimated) == mbgl::underlying_type(mbgl::MapChangeRegionDidChangeAnimated), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeWillStartLoadingMap) == mbgl::underlying_type(mbgl::MapChangeWillStartLoadingMap), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFinishLoadingMap) == mbgl::underlying_type(mbgl::MapChangeDidFinishLoadingMap), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFailLoadingMap) == mbgl::underlying_type(mbgl::MapChangeDidFailLoadingMap), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeWillStartRenderingFrame) == mbgl::underlying_type(mbgl::MapChangeWillStartRenderingFrame), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFinishRenderingFrame) == mbgl::underlying_type(mbgl::MapChangeDidFinishRenderingFrame), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFinishRenderingFrameFullyRendered) == mbgl::underlying_type(mbgl::MapChangeDidFinishRenderingFrameFullyRendered), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeWillStartRenderingMap) == mbgl::underlying_type(mbgl::MapChangeWillStartRenderingMap), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFinishRenderingMap) == mbgl::underlying_type(mbgl::MapChangeDidFinishRenderingMap), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFinishRenderingMapFullyRendered) == mbgl::underlying_type(mbgl::MapChangeDidFinishRenderingMapFullyRendered), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeDidFinishLoadingStyle) == mbgl::underlying_type(mbgl::MapChangeDidFinishLoadingStyle), "error");
+static_assert(mbgl::underlying_type(QMapboxGL::MapChangeSourceDidChange) == mbgl::underlying_type(mbgl::MapChangeSourceDidChange), "error");
+
 // mbgl::NorthOrientation
 static_assert(mbgl::underlying_type(QMapboxGL::NorthUpwards) == mbgl::underlying_type(mbgl::NorthOrientation::Upwards), "error");
 static_assert(mbgl::underlying_type(QMapboxGL::NorthRightwards) == mbgl::underlying_type(mbgl::NorthOrientation::Rightwards), "error");
@@ -405,7 +423,7 @@ void QMapboxGL::cycleDebugOptions()
     {Mapbox Style Specification}.
 
     \note In case of a invalid style it will trigger a mapChanged
-    signal with QMapbox::MapChangeDidFailLoadingMap as argument.
+    signal with QMapboxGL::MapChangeDidFailLoadingMap as argument.
 */
 QString QMapboxGL::styleJson() const
 {
@@ -430,7 +448,7 @@ void QMapboxGL::setStyleJson(const QString &style)
     be fetched from anything that QNetworkAccessManager can handle.
 
     \note In case of a invalid style it will trigger a mapChanged
-    signal with QMapbox::MapChangeDidFailLoadingMap as argument.
+    signal with QMapboxGL::MapChangeDidFailLoadingMap as argument.
 */
 QString QMapboxGL::styleUrl() const
 {
@@ -563,7 +581,7 @@ void QMapboxGL::setCoordinateZoom(const Coordinate &coordinate_, double zoom_)
 /*!
     Atomically jumps to the \a camera options.
 */
-void QMapboxGL::jumpTo(const CameraOptions& camera)
+void QMapboxGL::jumpTo(const QMapboxGLCameraOptions& camera)
 {
     mbgl::CameraOptions mbglCamera;
     if (camera.center.isValid()) {
@@ -1092,11 +1110,11 @@ QMapboxGLPrivate::QMapboxGLPrivate(QMapboxGL *q, const QMapboxGLSettings &settin
         static_cast<mbgl::ConstrainMode>(settings.constrainMode()),
         static_cast<mbgl::ViewportMode>(settings.viewportMode())))
 {
-    qRegisterMetaType<QMapbox::MapChange>("QMapbox::MapChange");
+    qRegisterMetaType<QMapboxGL::MapChange>("QMapboxGL::MapChange");
 
     fileSourceObj->setAccessToken(settings.accessToken().toStdString());
     connect(this, SIGNAL(needsRendering()), q_ptr, SIGNAL(needsRendering()), Qt::QueuedConnection);
-    connect(this, SIGNAL(mapChanged(QMapbox::MapChange)), q_ptr, SIGNAL(mapChanged(QMapbox::MapChange)), Qt::QueuedConnection);
+    connect(this, SIGNAL(mapChanged(QMapboxGL::MapChange)), q_ptr, SIGNAL(mapChanged(QMapboxGL::MapChange)), Qt::QueuedConnection);
     connect(this, SIGNAL(copyrightsChanged(QString)), q_ptr, SIGNAL(copyrightsChanged(QString)), Qt::QueuedConnection);
 }
 
@@ -1143,7 +1161,7 @@ void QMapboxGLPrivate::notifyMapChange(mbgl::MapChange change)
         emit copyrightsChanged(QString::fromStdString(attribution));
     }
 
-    emit mapChanged(static_cast<QMapbox::MapChange>(change));
+    emit mapChanged(static_cast<QMapboxGL::MapChange>(change));
 }
 
 void QMapboxGLPrivate::connectionEstablished()
