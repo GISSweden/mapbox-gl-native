@@ -3,8 +3,21 @@
 #include <string>
 #include <cassert>
 #include <exception>
+#include <sstream>
 
 #include <mbgl/util/dtoa.hpp>
+
+#ifdef ANDROID
+namespace std {
+    template <typename T>
+    string to_string(T value)
+    {
+        std::ostringstream os ;
+        os << value ;
+        return os.str() ;
+    }
+}
+#endif
 
 namespace mbgl {
 namespace util {

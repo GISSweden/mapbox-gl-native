@@ -443,7 +443,7 @@ QMAKE_CXXFLAGS += \
     -DQT_IMAGE_DECODERS \
     -D__QT__ \
     -fvisibility=hidden \
-    -ftemplate-depth=512
+    -ftemplate-depth=1024
 
 LIBS += \
     -lz

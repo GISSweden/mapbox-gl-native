@@ -22,6 +22,13 @@
 
 #include <mapbox/polylabel.hpp>
 
+#ifdef ANDROID
+namespace std {
+    double round(double x) { return ::round(x); }
+}
+#endif
+
+
 namespace mbgl {
 
 using namespace style;
