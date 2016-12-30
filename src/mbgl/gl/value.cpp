@@ -350,7 +350,7 @@ BindVertexArray::Type BindVertexArray::Get() {
     return binding;
 }
 
-#if not MBGL_USE_GLES2
+#if not __ANDROID__ || not MBGL_USE_GLES2
 
 const constexpr PointSize::Type PointSize::Default;
 

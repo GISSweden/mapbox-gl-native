@@ -7,7 +7,7 @@ QT += location network opengl qml
 CONFIG += c++14 exceptions rtti build_all
 
 # workarounds due to (confirmed) buggs in the android Ndk
-android:DEFINES += ANDROID
+android:DEFINES += ANDROID __ANDROID__ MBGL_USE_GLES2
 
 #include(third_party.pri)
 
