@@ -12,11 +12,6 @@
 
 #ifdef ANDROID
 namespace std {
-//	double round(double x) { return round(x); }
-//	double pow(double x, int y) { return pow(x, y); }
-//	double min(double x, double y) { return min(x, y); }
-//	double max(double x, double y) { return max(x, y); }
-//	int move(const mapbox::geometry::multi_line_string<short, vector> x) { return move(x); }
 	string to_string(int x) { return to_string(x); }
 }
 #endif

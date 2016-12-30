@@ -11,8 +11,6 @@ android:DEFINES += ANDROID
 
 include(third_party.pri)
 
-
-
 # Core Mapbox GL
 SOURCES += \
     ../../src/clipper/clipper.cpp \
