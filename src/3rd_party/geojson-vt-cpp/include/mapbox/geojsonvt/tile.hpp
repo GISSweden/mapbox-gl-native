@@ -7,11 +7,27 @@
 
 #ifdef ANDROID
 namespace std {
-	double round(double x) { return round(x); }
-	double pow(double x, int y) { return pow(x, y); }
-	double min(double x, double y) { return min(x, y); }
-	double max(double x, double y) { return max(x, y); }
-	int move(const mapbox::geometry::multi_line_string<short, vector> x) { return move(x); }
+    double round(double x) { return ::round(x); }
+    double pow(double x, int y) { return ::pow(x, y); }
+    double min(double x, double y)
+    {
+        if (x <  y)
+            return x;
+        else
+            return y;
+    }
+    double max(double x, double y)
+    {
+        if (x > y)
+            return x;
+        else
+            return y;
+    }
+
+//    template<typename _Tp>
+//      constexpr typename std::remove_reference<_Tp>::type&&
+//      move(_Tp&& __t) noexcept
+//      { return static_cast<typename std::remove_reference<_Tp>::type&&>(__t); }
 }
 #endif
 

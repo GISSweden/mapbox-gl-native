@@ -9,7 +9,7 @@ CONFIG += c++14 exceptions rtti build_all
 # workarounds due to (confirmed) buggs in the android Ndk
 android:DEFINES += ANDROID
 
-include(third_party.pri)
+#include(third_party.pri)
 
 # Core Mapbox GL
 SOURCES += \
