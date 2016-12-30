@@ -5,6 +5,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <unordered_map>
 
 namespace mapbox {
 namespace geojsonvt {
