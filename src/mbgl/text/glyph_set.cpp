@@ -8,6 +8,18 @@
 #include <algorithm>
 #include <cassert>
 
+#ifdef ANDROID
+namespace std {
+    double fmax(double x, double y)
+    {
+        if (x > y)
+            return x;
+        else
+            return y;
+    }
+}
+#endif
+
 namespace mbgl {
 
 void GlyphSet::insert(uint32_t id, SDFGlyph&& glyph) {
