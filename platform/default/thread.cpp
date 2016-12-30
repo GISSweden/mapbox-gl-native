@@ -11,7 +11,9 @@ namespace platform {
 
 std::string getCurrentThreadName() {
     char name[32] = "unknown";
+#ifndef ANDROID
     pthread_getname_np(pthread_self(), name, sizeof(name));
+#endif
 
     return name;
 }
@@ -28,9 +30,11 @@ void makeThreadLowPriority() {
     struct sched_param param;
     param.sched_priority = 0;
 
+#ifndef ANDROID
     if (sched_setscheduler(0, SCHED_IDLE, &param) != 0) {
         Log::Warning(Event::General, "Couldn't set thread scheduling policy");
     }
+#endif
 }
 
 } // namespace platform
