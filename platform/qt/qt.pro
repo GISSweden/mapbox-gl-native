@@ -4,7 +4,14 @@ TEMPLATE = lib
 
 QT += location network opengl qml
 
-CONFIG += c++14 exceptions rtti shared_and_static build_all
+CONFIG += c++14 exceptions rtti build_all
+
+# workarounds due to (confirmed) buggs in the android Ndk
+android:DEFINES += ANDROID
+
+include(third_party.pri)
+
+
 
 # Core Mapbox GL
 SOURCES += \

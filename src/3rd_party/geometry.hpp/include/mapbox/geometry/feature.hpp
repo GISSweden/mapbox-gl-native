@@ -10,6 +10,14 @@
 #include <unordered_map>
 #include <experimental/optional>
 
+
+#ifdef ANDROID
+namespace std {
+
+}
+#endif
+
+
 namespace mapbox {
 namespace geometry {
 
