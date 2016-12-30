@@ -9,6 +9,13 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #pragma GCC diagnostic pop
 
+#ifdef ANDROID
+#include <QString>
+namespace std {
+    int stoi(string x) { return QString::fromStdString(x).toInt(); }
+}
+#endif
+
 namespace mbgl {
 namespace http {
 
