@@ -8,17 +8,7 @@
 #include <algorithm>
 #include <cassert>
 
-#ifdef ANDROID
-namespace std {
-    double fmax(double x, double y)
-    {
-        if (x > y)
-            return x;
-        else
-            return y;
-    }
-}
-#endif
+#include <std_fix.h>
 
 namespace mbgl {
 
@@ -127,7 +117,7 @@ float GlyphSet::determineIdeographicLineWidth(const std::u16string& logicalInput
             totalWidth += it->second.metrics.advance + spacing;
     }
 
-    int32_t lineCount = std::fmax(1, std::ceil(totalWidth / maxWidth));
+    int32_t lineCount = std_fix::fmax(1, std::ceil(totalWidth / maxWidth));
     return totalWidth / lineCount;
 }
 

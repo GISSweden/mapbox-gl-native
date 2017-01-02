@@ -22,12 +22,7 @@
 
 #include <mapbox/polylabel.hpp>
 
-#ifdef ANDROID
-namespace std {
-    double round(double x) { return ::round(x); }
-}
-#endif
-
+#include <std_fix.h>
 
 namespace mbgl {
 
@@ -490,7 +485,7 @@ void SymbolLayout::addSymbols(Buffer &buffer, const SymbolQuads &symbols, float 
         uint16_t index = segment.vertexLength;
 
         // Encode angle of glyph
-        uint8_t glyphAngle = std::round((symbol.glyphAngle / (M_PI * 2)) * 256);
+        uint8_t glyphAngle = std_fix::round((symbol.glyphAngle / (M_PI * 2)) * 256);
 
         // coordinates (2 triangles)
         buffer.vertices.emplace_back(SymbolAttributes::vertex(anchorPoint, tl, tex.x, tex.y,

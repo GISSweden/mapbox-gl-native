@@ -10,11 +10,12 @@
 #include <map>
 #include <unordered_map>
 
-#ifdef ANDROID
-namespace std {
-	string to_string(int x) { return to_string(x); }
-}
-#endif
+//#ifdef ANDROID
+//#include <QString>
+//namespace std {
+//        string to_string(int x) { return QString::number(x).toStdString(); }
+//}
+//#endif
 
 namespace mapbox {
 namespace geojsonvt {
@@ -24,6 +25,7 @@ using feature             = mapbox::geometry::feature<double>;
 using feature_collection  = mapbox::geometry::feature_collection<double>;
 using geometry_collection = mapbox::geometry::geometry_collection<double>;
 using geojson             = mapbox::util::variant<geometry, feature, feature_collection>;
+using namespace std;
 
 struct ToFeatureCollection {
     feature_collection operator()(const feature_collection& value) const {
@@ -92,7 +94,7 @@ public:
     const Tile& getTile(const uint8_t z, const uint32_t x_, const uint32_t y) {
 
         if (z > options.maxZoom)
-            throw std::runtime_error("Requested zoom higher than maxZoom: " + std::to_string(z));
+            throw std::runtime_error("Requested zoom higher than maxZoom");
 
         const uint32_t z2 = std::pow(2, z);
         const uint32_t x = ((x_ % z2) + z2) % z2; // wrap tile x coordinate

@@ -9,12 +9,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #pragma GCC diagnostic pop
 
-#ifdef ANDROID
-#include <QString>
-namespace std {
-    int stoi(string x) { return QString::fromStdString(x).toInt(); }
-}
-#endif
+#include <std_fix.h>
 
 namespace mbgl {
 namespace http {
@@ -40,14 +35,14 @@ optional<Timestamp> parseRetryHeaders(const optional<std::string>& retryAfter,
                                       const optional<std::string>& xRateLimitReset) {
     if (retryAfter) {
         try {
-            auto secs = std::chrono::seconds(std::stoi(*retryAfter));
+            auto secs = std::chrono::seconds(std_fix::stoi(*retryAfter));
             return std::chrono::time_point_cast<Seconds>(std::chrono::system_clock::now() + secs);
         } catch (...) {
             return util::parseTimestamp((*retryAfter).c_str());
         }
     } else if (xRateLimitReset) {
         try {
-            return util::parseTimestamp(std::stoi(*xRateLimitReset));
+            return util::parseTimestamp(std_fix::stoi(*xRateLimitReset));
         } catch (...) {
             return {};
         }

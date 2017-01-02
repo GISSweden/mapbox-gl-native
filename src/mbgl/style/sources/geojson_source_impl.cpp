@@ -16,6 +16,8 @@
 
 #include <sstream>
 
+#include <std_fix.h>
+
 namespace mbgl {
 namespace style {
 namespace conversion {
@@ -67,7 +69,7 @@ void GeoJSONSource::Impl::_setGeoJSON(const GeoJSON& geoJSON) {
         mapbox::geojsonvt::Options vtOptions;
         vtOptions.maxZoom = options.maxzoom;
         vtOptions.extent = util::EXTENT;
-        vtOptions.buffer = std::round(scale * options.buffer);
+        vtOptions.buffer = std_fix::round(scale * options.buffer);
         vtOptions.tolerance = scale * options.tolerance;
         geoJSONOrSupercluster = std::make_unique<mapbox::geojsonvt::GeoJSONVT>(geoJSON, vtOptions);
 
@@ -75,7 +77,7 @@ void GeoJSONSource::Impl::_setGeoJSON(const GeoJSON& geoJSON) {
         mapbox::supercluster::Options clusterOptions;
         clusterOptions.maxZoom = options.clusterMaxZoom;
         clusterOptions.extent = util::EXTENT;
-        clusterOptions.radius = std::round(scale * options.clusterRadius);
+        clusterOptions.radius = std_fix::round(scale * options.clusterRadius);
 
         const auto& features = geoJSON.get<mapbox::geometry::feature_collection<double>>();
         geoJSONOrSupercluster =

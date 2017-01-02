@@ -1,4 +1,5 @@
 #pragma once
+#include <std_fix.h>
 
 #include <kdbush.hpp>
 #include <mapbox/geometry/feature.hpp>
@@ -118,8 +119,8 @@ public:
         auto visitor = [&, this](const auto &id) {
             auto const &c = zoom.clusters[id];
 
-            TilePoint point(std::round(this->options.extent * (c.pos.x * z2 - x)),
-                            std::round(this->options.extent * (c.pos.y * z2 - y)));
+            TilePoint point(std_fix::round(this->options.extent * (c.pos.x * z2 - x)),
+                            std_fix::round(this->options.extent * (c.pos.y * z2 - y)));
             TileFeature feature{ point };
 
             if (c.num_points == 1) {

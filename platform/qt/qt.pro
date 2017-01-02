@@ -9,6 +9,8 @@ CONFIG += c++14 exceptions rtti build_all
 # workarounds due to (confirmed) buggs in the android Ndk
 android:DEFINES += ANDROID __ANDROID__ MBGL_USE_GLES2
 
+QMAKE_LFLAGS += -v
+
 #include(third_party.pri)
 
 # Core Mapbox GL
@@ -433,7 +435,8 @@ INCLUDEPATH += \
     ../../src/3rd_party/unique_resource \
     ../../src/3rd_party/unique_resource/include \
     ../../src/3rd_party/variant \
-    ../../src/3rd_party/variant/include
+    ../../src/3rd_party/variant/include \
+    ../../src/3rd_party/std_fix/include
 
 RESOURCES += \
     qmapbox.qrc

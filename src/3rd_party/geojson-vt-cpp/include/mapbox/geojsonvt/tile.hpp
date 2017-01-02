@@ -1,35 +1,10 @@
 #pragma once
 
+#include <std_fix.h>
+
 #include <algorithm>
 #include <cmath>
 #include <mapbox/geojsonvt/types.hpp>
-
-
-#ifdef ANDROID
-namespace std {
-    double round(double x) { return ::round(x); }
-    double pow(double x, int y) { return ::pow(x, y); }
-    double min(double x, double y)
-    {
-        if (x <  y)
-            return x;
-        else
-            return y;
-    }
-    double max(double x, double y)
-    {
-        if (x > y)
-            return x;
-        else
-            return y;
-    }
-
-//    template<typename _Tp>
-//      constexpr typename std::remove_reference<_Tp>::type&&
-//      move(_Tp&& __t) noexcept
-//      { return static_cast<typename std::remove_reference<_Tp>::type&&>(__t); }
-}
-#endif
 
 
 namespace mapbox {
@@ -165,8 +140,8 @@ private:
 
     mapbox::geometry::point<int16_t> transform(const vt_point& p) {
         ++tile.num_simplified;
-        return { static_cast<int16_t>(std::round((p.x * z2 - x) * extent)),
-                 static_cast<int16_t>(std::round((p.y * z2 - y) * extent)) };
+        return { static_cast<int16_t>(std_fix::round((p.x * z2 - x) * extent)),
+                 static_cast<int16_t>(std_fix::round((p.y * z2 - y) * extent)) };
     }
 
     mapbox::geometry::multi_point<int16_t> transform(const vt_multi_point& points) {
